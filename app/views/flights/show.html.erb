@@ -31,6 +31,23 @@
   </td>
 </tr>
 </table>
+<h1>Listing seats</h1>
 
+<table>
+  <% @seats.each do |seat| %>
+  <tr>
+    <td><%= seat.numero %></td>
+    <td><%= seat.posicion %></td>
+    <td><%= seat.vuelo %></td>
+    <td><%= seat.estado %></td>
+    <td><%= link_to 'Show', seat %></td>
+    <td><%= link_to 'Edit', edit_seat_path(seat) %></td>
+    <td><%= link_to 'Destroy', seat, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+    
+  </tr>
 
+</table>
 
+<br />
