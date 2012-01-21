@@ -1,6 +1,8 @@
 MobileReserva::Application.routes.draw do
   
 
+  resources :seats
+
   root :to => 'flights#index'
   
   resources :flights

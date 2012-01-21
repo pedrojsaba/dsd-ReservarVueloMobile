@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  numero: 1
+  posicion: MyString
+  vuelo: MyString
+  estado: false
+
+two:
+  numero: 1
+  posicion: MyString
+  vuelo: MyString
+  estado: false
