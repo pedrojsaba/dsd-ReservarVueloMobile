@@ -1,0 +1,13 @@
+
+    <p><strong class="ui-link">Bienvenido.</strong> Busque y realice la reserva de su vuelo.</p>
+
+    <ul data-role="listview" data-inset="true" data-filter="true">
+       
+        <% @flights.each do |flight| %>
+            <li>
+                <%= link_to flight.codigo , flight %>
+            </li>
+            
+        <% end %>
+    </ul>
+

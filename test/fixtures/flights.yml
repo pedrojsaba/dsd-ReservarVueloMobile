@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  codigo: MyString
+  aerolinea: MyString
+  salida: 2012-01-13 16:32:22
+  llegada: 2012-01-13 16:32:22
+  ciudad: MyString
+  estado: false
+
+two:
+  codigo: MyString
+  aerolinea: MyString
+  salida: 2012-01-13 16:32:22
+  llegada: 2012-01-13 16:32:22
+  ciudad: MyString
+  estado: false

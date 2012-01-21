@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<h1>
+  <%= @flight.codigo %>
+</h1>
+
+<p>
+  <b>Aerolínea:</b>
+  <%= @flight.aerolinea %>
+</p>
+<p>
+  <b>Ciudad:</b>
+  <%= @flight.ciudad %>
+</p>
+<table>
+<tr>
+  <td><b>Salida:</b>
+  </td>
+  <td><b>Llegada:</b>
+  </td>
+</tr>
+<tr>
+  <td><p>
+  <%= @flight.salida %>
+</p>
+  </td>
+  <td><p>
+  
+  <%= @flight.llegada %>
+</p>
+  </td>
+</tr>
+</table>
+
+
+
