@@ -14,10 +14,11 @@ class FlightsController < ApplicationController
   # GET /flights/1.json
   def show
     @flight = Flight.find(params[:id])
-
+    @seats = Seat.all
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @flight }
+      format.json { render json: @seats }
     end
   end
 
