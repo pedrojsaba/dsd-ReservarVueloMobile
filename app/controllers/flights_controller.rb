@@ -1,20 +1,59 @@
 class FlightsController < ApplicationController
   # GET /flights
-  # GET /flights.json
   def index
-    @flights = Flight.all
 
-    respond_to do |format|
+    client = Savon::Client.new (ruta_wdsl)
+    client.wsdl.soap_actions
+    response = client.request :ser, :obtenerListaVuelos do
+      soap.namespaces["xmlns:ser"] = "http://service.wsreserva.qwerty.dsd.upc.edu.pe/"
+    end
+
+    if response.success?
+
+     @flights=response.to_hash()
+      respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @flights }
-    end
+     end
+
+    end  
+    
   end
 
   # GET /flights/1
   # GET /flights/1.json
   def show
+
     @flight = Flight.find(params[:id])
+    codigo = @flight.codigo
+       
+    Seat.destroy_all
+
+    client = Savon::Client.new (ruta_wdsl)
+    client.wsdl.soap_actions
+    response = client.request :ser, :obtenerAsientos do
+      soap.namespaces["xmlns:ser"] = "http://service.wsreserva.qwerty.dsd.upc.edu.pe/"
+      soap.body = "<idVuelo>" + codigo + "</idVuelo>"    
+    end
+
+    if response.success?
+
+      @datos = response.to_hash
+
+      # Rails.logger.info @datos.inspect
+
+      @datos[:obtener_asientos_response][:return].each do |dato|         
+        s=Seat.new 
+        s.numero= dato[:numero]
+        s.posicion= dato[:descripcion]
+        s.vuelo= dato[:id_vuelo]
+        s.estado= dato[:estado]
+        s.save
+      end
+    end
+
     @seats = Seat.all
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @flight }

@@ -32,14 +32,17 @@
 </tr>
 </table>
 
+<form url='flights/change_status'>
 
 Seleccionar Asiento:
-<select class="large" name="mediumSelect" id="mediumSelect"> 
+  <select class="large" name="mediumSelect" id="mediumSelect"> 
   <% @seats.each do |seat| %>
-    <% if seat.vuelo==@flight.codigo && seat.estado==false %>
+    <% if seat.estado==false %>
       <option value="<%= seat.id %>">Asiento N° <%= seat.numero %> (<%= seat.posicion %>)</option>
     <% end %>
   <% end %>
 </select>
 
  <button id="btnReservar" data-icon="star" data-theme="b" data-form="ui-btn-up-a" class="ui-btn-hidden" aria-disabled="false">Realizar Reserva</button>
+
+</form>

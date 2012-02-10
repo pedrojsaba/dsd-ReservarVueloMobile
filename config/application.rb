@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'savon'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -45,6 +46,5 @@ module MobileReserva
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
-    config.assets.compile = true
   end
 end

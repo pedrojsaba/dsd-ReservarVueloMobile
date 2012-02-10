@@ -1,0 +1,8 @@
+development:
+  path: "http://localhost:8080/wsreserva/services/vueloService?wsdl"
+
+test:
+  path: ""
+
+production:
+  path: ""

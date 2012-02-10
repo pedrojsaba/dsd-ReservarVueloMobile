@@ -3,11 +3,12 @@
 
     <ul data-role="listview" data-inset="true" data-filter="true">
        
-        <% @flights.each do |flight| %>
-            <li>
-                <%= link_to flight.codigo , flight %>
+        <% @flights[:obtener_lista_vuelos_response][:return].each do |flight| %>
+        	
+            <li>            
+                <%= link_to flight[:codigo_vuelo] , "flights/"+flight[:id_vuelo] %>
             </li>
             
         <% end %>
     </ul>
-
+ 

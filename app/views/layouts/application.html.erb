@@ -25,11 +25,14 @@
 </head>
 <body>
 	<div data-role="page" id="one">
+	
 		<div data-role="header" data-theme="b">
 		
 			<h1>Reserva de Vuelos</h1>
 			<a href="/" data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-left jqm-home">Home</a>
-			<a  data-rel="back" data-icon="back" data-iconpos="notext" data-add-back-btn="true" class="ui-btn-right" data-back-btn-text="previous">Atrás</a>
+			<a href="/auth/facebook" class="auth_provider ui-btn-right" >
+			  <%= image_tag "facebook_32.png", :size => "16x16", :alt => "Facebook" %>
+			</a>
 
 		</div><!-- /header -->
 
