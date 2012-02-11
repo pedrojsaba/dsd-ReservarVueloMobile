@@ -5,4 +5,4 @@ test:
   path: ""
 
 production:
-  path: ""
+  path: "http://64.76.72.75/wsreserva/services/vueloService?wsdl"

@@ -1,45 +1,55 @@
 <p id="notice"><%= notice %></p>
 
 <h1>
-  <%= @flight.codigo %>
+  <%= @flight[:obtener_vuelo_response][:return][:codigo_vuelo] %>
 </h1>
-
 <p>
   <b>Aerolínea:</b>
-  <%= @flight.aerolinea %>
+  <%= @flight[:obtener_vuelo_response][:return][:aerolinea] %>
 </p>
-<p>
-  <b>Ciudad:</b>
-  <%= @flight.ciudad %>
-</p>
-<table>
-<tr>
-  <td><b>Salida:</b>
-  </td>
-  <td><b>Llegada:</b>
-  </td>
-</tr>
-<tr>
-  <td><p>
-  <%= @flight.salida %>
-</p>
-  </td>
-  <td><p>
-  
-  <%= @flight.llegada %>
-</p>
-  </td>
-</tr>
-</table>
+
+  <table border="1px solid">
+    <tr align="center">
+      <td></td>
+      <td><b>Salida</b>
+      </td>
+      <td><b>Llegada</b>
+      </td>
+    </tr>
+    <tr>
+      <td><b>Fecha y hora:</b></td>
+      <td>
+        <p>
+          <%= @flight[:obtener_vuelo_response][:return][:fecha_salida] %>
+        </p>
+      </td>
+      <td>
+        <p>
+          <%= @flight[:obtener_vuelo_response][:return][:fecha_llegada] %>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td><b>Ciudad:</b></td>
+      <td align="center">
+        <p>
+          <%= @flight[:obtener_vuelo_response][:return][:ciudad_origen] %>
+        </p>
+      </td>
+      <td align="center">
+        <p>
+          <%= @flight[:obtener_vuelo_response][:return][:ciudad_destino] %>
+        </p>
+      </td>
+    </tr>
+  </table>
+
 
 <form url='flights/change_status'>
-
 Seleccionar Asiento:
   <select class="large" name="mediumSelect" id="mediumSelect"> 
-  <% @seats.each do |seat| %>
-    <% if seat.estado==false %>
-      <option value="<%= seat.id %>">Asiento N° <%= seat.numero %> (<%= seat.posicion %>)</option>
-    <% end %>
+  <% @seats[:obtener_asientos_response][:return].each do |seat| %>
+      <option value="<%= seat[:id_asiento] %>">Asiento N° <%= seat[:numero] %> (<%= seat[:descripcion] %>)</option>
   <% end %>
 </select>
 

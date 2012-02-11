@@ -23,41 +23,38 @@ class FlightsController < ApplicationController
   # GET /flights/1
   # GET /flights/1.json
   def show
-
-    @flight = Flight.find(params[:id])
-    codigo = @flight.codigo
-       
-    Seat.destroy_all
-
-    client = Savon::Client.new (ruta_wdsl)
-    client.wsdl.soap_actions
-    response = client.request :ser, :obtenerAsientos do
+    #@flight = Flight.find(params[:id])
+    idvuelo=params[:id]
+    client_flight = Savon::Client.new (ruta_wdsl)
+    client_flight.wsdl.soap_actions
+    response_flight = client_flight.request :ser, :obtenerVuelo do
       soap.namespaces["xmlns:ser"] = "http://service.wsreserva.qwerty.dsd.upc.edu.pe/"
-      soap.body = "<idVuelo>" + codigo + "</idVuelo>"    
+      soap.body = "<idVuelo>" + idvuelo + "</idVuelo>"    
     end
+    if response_flight.success?
+      @flight = response_flight.to_hash
+      #@datos[:obtener_vuelo_response][:return].each do |dato|  
+      #  @flight=dato
+      #end 
+    end
+    
+    client_seat = Savon::Client.new (ruta_wdsl)
+    client_seat.wsdl.soap_actions
+    response_seat = client_seat.request :ser, :obtenerAsientos do
+      soap.namespaces["xmlns:ser"] = "http://service.wsreserva.qwerty.dsd.upc.edu.pe/"
+      soap.body = "<idVuelo>" + idvuelo + "</idVuelo>"    
+    end
+    
+    Rails.logger.info @flight.inspect
 
-    if response.success?
+    if response_seat.success?
+      @seats = response_seat.to_hash
 
-      @datos = response.to_hash
-
-      # Rails.logger.info @datos.inspect
-
-      @datos[:obtener_asientos_response][:return].each do |dato|         
-        s=Seat.new 
-        s.numero= dato[:numero]
-        s.posicion= dato[:descripcion]
-        s.vuelo= dato[:id_vuelo]
-        s.estado= dato[:estado]
-        s.save
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @flight }
+        format.json { render json: @seats }
       end
-    end
-
-    @seats = Seat.all
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @flight }
-      format.json { render json: @seats }
     end
   end
 
