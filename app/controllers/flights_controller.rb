@@ -23,7 +23,6 @@ class FlightsController < ApplicationController
   # GET /flights/1
   # GET /flights/1.json
   def show
-    #@flight = Flight.find(params[:id])
     idvuelo=params[:id]
     client_flight = Savon::Client.new (ruta_wdsl)
     client_flight.wsdl.soap_actions
@@ -33,9 +32,6 @@ class FlightsController < ApplicationController
     end
     if response_flight.success?
       @flight = response_flight.to_hash
-      #@datos[:obtener_vuelo_response][:return].each do |dato|  
-      #  @flight=dato
-      #end 
     end
     
     client_seat = Savon::Client.new (ruta_wdsl)
@@ -44,8 +40,6 @@ class FlightsController < ApplicationController
       soap.namespaces["xmlns:ser"] = "http://service.wsreserva.qwerty.dsd.upc.edu.pe/"
       soap.body = "<idVuelo>" + idvuelo + "</idVuelo>"    
     end
-    
-    Rails.logger.info @flight.inspect
 
     if response_seat.success?
       @seats = response_seat.to_hash
@@ -71,7 +65,44 @@ class FlightsController < ApplicationController
 
   # GET /flights/1/edit
   def edit
-    @flight = Flight.find(params[:id])
+    #@flight = Flight.find(params[:id])
+    idvuelo=params[:id]
+    client_flight = Savon::Client.new (ruta_wdsl)
+    client_flight.wsdl.soap_actions
+    response_flight = client_flight.request :ser, :obtenerVuelo do
+      soap.namespaces["xmlns:ser"] = "http://service.wsreserva.qwerty.dsd.upc.edu.pe/"
+      soap.body = "<idVuelo>" + idvuelo + "</idVuelo>"    
+    end
+    if response_flight.success?
+      @flight = response_flight.to_hash
+    end
+    
+    client_seat = Savon::Client.new (ruta_wdsl)
+    client_seat.wsdl.soap_actions
+    response_seat = client_seat.request :ser, :obtenerAsientos do
+      soap.namespaces["xmlns:ser"] = "http://service.wsreserva.qwerty.dsd.upc.edu.pe/"
+      soap.body = "<idVuelo>" + idvuelo + "</idVuelo>"    
+    end
+
+    if response_seat.success?
+      @asientos = response_seat.to_hash
+      @asientos[:obtener_asientos_response][:return].each do |asiento|
+        s=Seat.new
+        s.id_asiento = asiento[:id_asiento]
+        s.numero = asiento[:numero] 
+        s.posicion = asiento[:descripcion]
+        s.flight_id = asiento[:id_vuelo]
+        s.save
+      end
+
+      @seats = Seat.all
+    
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @flight }
+        format.json { render json: @seats }
+      end
+    end
   end
 
   # POST /flights

@@ -4,11 +4,11 @@ MobileReserva::Application.routes.draw do
 
   resources :seats
 
+  resources :passengers
+
   root :to => 'flights#index'
   
   resources :flights
-
-  match '/auth/:provider/callback', to: 'sessions#create'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,0 +1,21 @@
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#facebook-get").click(function() {
+    $.ajax({
+      url: "http://graph.facebook.com/"+$("#passenger_user").val(),
+      dataType: "jsonp",
+      success: function(data){
+        $("#passenger_first_name").val(data.first_name);
+        $("#passenger_last_name").val(data.last_name);
+        $("#passenger_email").val(data.username+"@facebook.com");
+      }
+    });
+  });
+
+});
+</script>
+
+<button id="facebook-get" data-icon="refresh">Facebook</button>
+<h2>Nuevo pasajero</h2>
+<%= render 'form' %>
+

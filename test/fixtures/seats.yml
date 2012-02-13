@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
 
 one:
+  id_asiento: 1
   numero: 1
   posicion: MyString
-  vuelo: MyString
-  estado: false
+  flight_id: 1
 
 two:
+  id_asiento: 1
   numero: 1
   posicion: MyString
-  vuelo: MyString
-  estado: false
+  flight_id: 1

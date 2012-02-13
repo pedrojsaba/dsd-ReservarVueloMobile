@@ -8,51 +8,40 @@
   <%= @flight[:obtener_vuelo_response][:return][:aerolinea] %>
 </p>
 
-  <table border="1px solid">
-    <tr align="center">
-      <td></td>
-      <td><b>Salida</b>
-      </td>
-      <td><b>Llegada</b>
-      </td>
-    </tr>
-    <tr>
-      <td><b>Fecha y hora:</b></td>
-      <td>
+  <div>
+   <ul data-role="listview">
+      <li>
+        <h3>SALIDA</h3>
         <p>
-          <%= @flight[:obtener_vuelo_response][:return][:fecha_salida] %>
+          <%= @flight[:obtener_vuelo_response][:return][:fecha_salida].strftime("%d-%m-%Y - %H:%M") %>
         </p>
-      </td>
-      <td>
+        <p class="ui-li-aside"><strong><%= @flight[:obtener_vuelo_response][:return][:ciudad_origen] %></strong></p>
+      </li>
+      <li>
+        <h3>LLEGADA</h3>
         <p>
-          <%= @flight[:obtener_vuelo_response][:return][:fecha_llegada] %>
+          <%= @flight[:obtener_vuelo_response][:return][:fecha_llegada].strftime("%d-%m-%Y - %H:%M") %>
         </p>
-      </td>
-    </tr>
-    <tr>
-      <td><b>Ciudad:</b></td>
-      <td align="center">
-        <p>
-          <%= @flight[:obtener_vuelo_response][:return][:ciudad_origen] %>
-        </p>
-      </td>
-      <td align="center">
-        <p>
-          <%= @flight[:obtener_vuelo_response][:return][:ciudad_destino] %>
-        </p>
-      </td>
-    </tr>
-  </table>
+        <p class="ui-li-aside"><strong><%= @flight[:obtener_vuelo_response][:return][:ciudad_destino] %></strong></p>
+      </li>
+     </ul>
+  </div>
 
-
+<div>
 <form url='flights/change_status'>
 Seleccionar Asiento:
-  <select class="large" name="mediumSelect" id="mediumSelect"> 
-  <% @seats[:obtener_asientos_response][:return].each do |seat| %>
-      <option value="<%= seat[:id_asiento] %>">Asiento N° <%= seat[:numero] %> (<%= seat[:descripcion] %>)</option>
+  <% if @seats[:obtener_asientos_response][:return]!=nil %>
+    <select class="large" name="mediumSelect" id="mediumSelect"> 
+      <% @seats[:obtener_asientos_response][:return].each do |seat| %>
+          <option value="<%= seat[:id_asiento] %>">Asiento N° <%= seat[:numero] %> (<%= seat[:descripcion] %>)</option>
+      <% end %>
+    </select>
+    <button id="btnReservar" data-icon="star" data-theme="b" data-form="ui-btn-up-a" class="ui-btn-hidden" aria-disabled="false">Realizar Reserva</button>
+  <% else %>  
+    <div>
+      <b>No hay asientos disponibles.</b>
+    </div>
   <% end %>
-</select>
-
- <button id="btnReservar" data-icon="star" data-theme="b" data-form="ui-btn-up-a" class="ui-btn-hidden" aria-disabled="false">Realizar Reserva</button>
-
+ 
 </form>
+</div>

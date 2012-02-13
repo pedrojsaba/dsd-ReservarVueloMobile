@@ -2,10 +2,10 @@
 
 <table>
   <tr>
+    <th>Id asiento</th>
     <th>Numero</th>
     <th>Posicion</th>
-    <th>Vuelo</th>
-    <th>Estado</th>
+    <th>Flight</th>
     <th></th>
     <th></th>
     <th></th>
@@ -13,10 +13,10 @@
 
 <% @seats.each do |seat| %>
   <tr>
+    <td><%= seat.id_asiento %></td>
     <td><%= seat.numero %></td>
     <td><%= seat.posicion %></td>
-    <td><%= seat.vuelo %></td>
-    <td><%= seat.estado %></td>
+    <td><%= seat.flight_id %></td>
     <td><%= link_to 'Show', seat %></td>
     <td><%= link_to 'Edit', edit_seat_path(seat) %></td>
     <td><%= link_to 'Destroy', seat, confirm: 'Are you sure?', method: :delete %></td>

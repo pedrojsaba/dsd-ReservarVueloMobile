@@ -12,6 +12,10 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :id_asiento %><br />
+    <%= f.number_field :id_asiento %>
+  </div>
+  <div class="field">
     <%= f.label :numero %><br />
     <%= f.number_field :numero %>
   </div>
@@ -20,12 +24,8 @@
     <%= f.text_field :posicion %>
   </div>
   <div class="field">
-    <%= f.label :vuelo %><br />
-    <%= f.text_field :vuelo %>
-  </div>
-  <div class="field">
-    <%= f.label :estado %><br />
-    <%= f.check_box :estado %>
+    <%= f.label :flight_id %><br />
+    <%= f.number_field :flight_id %>
   </div>
   <div class="actions">
     <%= f.submit %>

@@ -1,41 +1,39 @@
-<%= form_for(@flight) do |f| %>
-  <% if @flight.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@flight.errors.count, "error") %> prohibited this flight from being saved:</h2>
+<h1>
+  <%= @flight[:obtener_vuelo_response][:return][:codigo_vuelo] %>
+</h1>
+<p>
+  <b>Aerolínea:</b>
+  <%= @flight[:obtener_vuelo_response][:return][:aerolinea] %>
+</p>
 
-      <ul>
-      <% @flight.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <div>
+   <ul data-role="listview">
+      <li>
+        <h3>SALIDA</h3>
+        <p>
+          <%= @flight[:obtener_vuelo_response][:return][:fecha_salida].strftime("%d-%m-%Y - %H:%M") %>
+        </p>
+        <p class="ui-li-aside"><strong><%= @flight[:obtener_vuelo_response][:return][:ciudad_origen] %></strong></p>
+      </li>
+      <li>
+        <h3>LLEGADA</h3>
+        <p>
+          <%= @flight[:obtener_vuelo_response][:return][:fecha_llegada].strftime("%d-%m-%Y - %H:%M") %>
+        </p>
+        <p class="ui-li-aside"><strong><%= @flight[:obtener_vuelo_response][:return][:ciudad_destino] %></strong></p>
+      </li>
+     </ul>
+  </div>
+
+<div>
+<%= form_for(@seats) do |f| %>
 
   <div class="field">
-    <%= f.label :código %><br />
-    <%= f.text_field :codigo %>
-  </div>
-  <div class="field">
-    <%= f.label :aerolínea %><br />
-    <%= f.text_field :aerolinea %>
-  </div>
-  <div class="field">
-    <%= f.label :salida %><br />
-    <%= f.datetime_select :salida %>
-  </div>
-  <div class="field">
-    <%= f.label :llegada %><br />
-    <%= f.datetime_select :llegada %>
-  </div>
-  <div class="field">
-    <%= f.label :ciudad %><br />
-    <%= f.text_field :ciudad %>
-  </div>
-  <div class="field">
-    <%= f.label :estado %><br />
-    <%= f.check_box :estado %>
+    <%= f.label :flight_id %><br />
+    <%= f.select :flight_id, @seats.collect {|t| [t.numero, t.id_asiento]}  %>
   </div>
   <div class="actions">
     <%= f.submit %>
   </div>
+
 <% end %>
