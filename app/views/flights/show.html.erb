@@ -29,14 +29,14 @@
 
 
 <div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="b">
-      <h3>Seleccionar Asiento</h3>
-      <br>
+  <h3>Seleccionar Asiento</h3>
+  <br>
   <% if @seats[:obtener_asientos_response][:return] == nil %>  
     <div>
       <b>No hay asientos disponibles.</b>
     </div>
   <% else %>
-    <% if @seats.size == 1 %>
+    <% if @seats[:obtener_asientos_response][:return].size == 1 %>
       <ul data-role="listview" data-inset="true" data-filter="true">
         <li>            
           <%= link_to "Asiento N° " + @seats[:obtener_asientos_response][:return][:numero] + " - " + @seats[:obtener_asientos_response][:return][:descripcion] , "/seats/"+@seats[:obtener_asientos_response][:return][:id_asiento]+"/edit" %>
