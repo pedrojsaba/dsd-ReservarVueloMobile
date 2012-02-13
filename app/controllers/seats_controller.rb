@@ -34,7 +34,28 @@ class SeatsController < ApplicationController
 
   # GET /seats/1/edit
   def edit
-    @seat = Seat.find(params[:id])
+    #@seat = Seat.find(params[:id])
+    Seat.destroy_all
+    idasiento=params[:id]
+    client = Savon::Client.new (ruta_wdsl)
+    client.wsdl.soap_actions
+    response = client.request :ser, :obtenerAsiento do
+      soap.namespaces["xmlns:ser"] = "http://service.wsreserva.qwerty.dsd.upc.edu.pe/"
+      soap.body = "<idAsiento>" + idasiento + "</idAsiento>"
+    end
+
+    if response.success?
+      @datos=response.to_hash()
+      
+      s=Seat.new
+      s.id_asiento=@datos[:obtener_asiento_response][:return][:id_asiento]
+      s.numero=@datos[:obtener_asiento_response][:return][:numero]
+      s.posicion=@datos[:obtener_asiento_response][:return][:descripcion]
+      s.flight_id=@datos[:obtener_asiento_response][:return][:id_vuelo]
+      s.save
+      
+      @seat=Seat.first
+    end
   end
 
   # POST /seats
@@ -57,14 +78,24 @@ class SeatsController < ApplicationController
   # PUT /seats/1.json
   def update
     @seat = Seat.find(params[:id])
+    idasiento=@seat.id_asiento.to_s
+    client = Savon::Client.new (ruta_wdsl)
+    client.wsdl.soap_actions
+    response = client.request :ser, :reservarAsiento do
+      soap.namespaces["xmlns:ser"] = "http://service.wsreserva.qwerty.dsd.upc.edu.pe/"
+      soap.body = "<usuario>ecampos</usuario><password>ecampos</password><idAsiento>"+idasiento+"</idAsiento>"
+    end
 
-    respond_to do |format|
-      if @seat.update_attributes(params[:seat])
-        format.html { redirect_to @seat, notice: 'Seat was successfully updated.' }
-        format.json { head :ok }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @seat.errors, status: :unprocessable_entity }
+    if response.success?
+      @seat=response.to_hash()
+      respond_to do |format|
+        if @seat[:reservar_asiento_response][:return][:codigo]=="0"
+          format.html { redirect_to "/", notice: 'Asiento reservado satisfactoriamente.' }
+          format.json { head :ok }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @seat[:reservar_asiento_response][:return][:mensaje], status: :unprocessable_entity }
+        end
       end
     end
   end

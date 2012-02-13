@@ -1,3 +1,4 @@
+<p id="notice"><%= notice %></p>
 
     <p><strong class="ui-link">Bienvenido.</strong> Busque y realice la reserva de su vuelo.</p>
 
@@ -6,7 +7,7 @@
         <% @flights[:obtener_lista_vuelos_response][:return].each do |flight| %>
         	
             <li>            
-                <%= link_to flight[:codigo_vuelo] , "flights/"+flight[:id_vuelo] %>
+                <%= link_to flight[:codigo_vuelo] , "/flights/"+flight[:id_vuelo] %>
             </li>
             
         <% end %>
