@@ -15,11 +15,11 @@
     <%= f.label :id_asiento %><br />
     <%= f.number_field :id_asiento %>
   </div>
-  <div class="field">
+  <div class="field" style="display:none">
     <%= f.label :numero %><br />
     <%= f.number_field :numero %>
   </div>
-  <div class="field">
+  <div class="field" style="display:none">
     <%= f.label :posicion %><br />
     <%= f.text_field :posicion %>
   </div>
@@ -27,6 +27,25 @@
     <%= f.label :flight_id %><br />
     <%= f.number_field :flight_id %>
   </div>
+
+  <div class="ui-grid-a">
+  <div class="ui-block-a">
+    <h3>Numero:</h3>
+    <div class="ui-bar ui-bar-b" style="height:50px;text-align:center;">
+      <p>
+         <span style="font-size:500%"><%= @seat.numero %></span>
+      </p>
+    </div>
+  </div>
+  <div class="ui-block-b">
+    <h3>Ubicación:</h3>
+    <div class="ui-bar ui-bar-b" style="height:50px;text-align:center;">
+      <p>
+        <span style="font-size:200%"><%= @seat.posicion %></span>
+      </p>
+    </div>
+  </div>
+  </div><!-- /grid-b -->
   <div class="actions">
     <%= f.submit %>
   </div>

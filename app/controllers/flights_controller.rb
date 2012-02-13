@@ -43,7 +43,7 @@ class FlightsController < ApplicationController
 
     if response_seat.success?
       @seats = response_seat.to_hash
-      Rails.logger.info @seats[:obtener_asientos_response].size.inspect
+      Rails.logger.info @seats[:obtener_asientos_response][:return].size.inspect
       respond_to do |format|
         format.html # show.html.erb
         format.json { render json: @flight }
