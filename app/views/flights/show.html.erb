@@ -36,19 +36,19 @@
       <b>No hay asientos disponibles.</b>
     </div>
   <% else %>
-    <% if @seats[:obtener_asientos_response][:return].size == 1 %>
-      <ul data-role="listview" data-inset="true" data-filter="true">
-        <li>            
-          <%= link_to "Asiento N° " + @seats[:obtener_asientos_response][:return][:numero] + " - " + @seats[:obtener_asientos_response][:return][:descripcion] , "/seats/"+@seats[:obtener_asientos_response][:return][:id_asiento]+"/edit" %>
-        </li>
-      </ul>
-    <% else %>
+    <% if @seats[:obtener_asientos_response][:return].is_a?(Array) %>
       <ul data-role="listview" data-inset="true" data-filter="true">
        <% @seats[:obtener_asientos_response][:return].each do |seat| %>
           <li>            
             <%= link_to "Asiento N° " + seat[:numero] + " - " + seat[:descripcion] , "/seats/"+seat[:id_asiento]+"/edit" %>
           </li>            
         <% end %>
+      </ul>
+    <% else %>
+      <ul data-role="listview" data-inset="true" data-filter="true">
+        <li>            
+          <%= link_to "Asiento N° " + @seats[:obtener_asientos_response][:return][:numero] + " - " + @seats[:obtener_asientos_response][:return][:descripcion] , "/seats/"+@seats[:obtener_asientos_response][:return][:id_asiento]+"/edit" %>
+        </li>
       </ul>
     <% end %>
   <% end %>
