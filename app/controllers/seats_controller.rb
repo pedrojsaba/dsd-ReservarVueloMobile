@@ -90,7 +90,7 @@ class SeatsController < ApplicationController
       @seat=response.to_hash()
       respond_to do |format|
         if @seat[:reservar_asiento_response][:return][:codigo]=="0"
-          format.html { redirect_to "/", notice: 'Asiento reservado satisfactoriamente.' }
+          format.html { redirect_to "/", notice: @seat[:reservar_asiento_response][:return][:mensaje] }
           format.json { head :ok }
         else
           format.html { render action: "edit" }
