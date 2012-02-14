@@ -1,6 +1,6 @@
 class CreateSeats < ActiveRecord::Migration
   def change
-    create_table "seats", :force => true do |t|
+    create_table :seats do |t|
       t.integer :id_asiento
       t.integer :numero
       t.string :posicion
