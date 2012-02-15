@@ -2,6 +2,8 @@ MobileReserva::Application.routes.draw do
   
 
 
+  resources :users
+
   resources :seats
 
   resources :passengers

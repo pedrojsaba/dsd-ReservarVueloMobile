@@ -78,12 +78,15 @@ class SeatsController < ApplicationController
   # PUT /seats/1.json
   def update
     @seat = Seat.find(params[:id])
+
     idasiento=@seat.id_asiento.to_s
+    usuario=session[:user].to_s
+    password=session[:pwd].to_s
     client = Savon::Client.new (ruta_wdsl)
     client.wsdl.soap_actions
     response = client.request :ser, :reservarAsiento do
       soap.namespaces["xmlns:ser"] = "http://service.wsreserva.qwerty.dsd.upc.edu.pe/"
-      soap.body = "<usuario>ecampos</usuario><password>ecampos</password><idAsiento>"+idasiento+"</idAsiento>"
+      soap.body = "<usuario>" + usuario + "</usuario><password>" + password + "</password><idAsiento>"+idasiento+"</idAsiento>"
     end
 
     if response.success?

@@ -17,11 +17,11 @@
   </div>
   <div class="field">
     <%= f.label :password %><br />
-    <%= f.text_field :password %>
+    <%= f.text_field :password, :type => "password" %>
   </div>
   <div class="field">
     <%= f.label :"Repetir Password" %><br />
-    <%= f.text_field :password %>
+    <%= f.text_field :password, :type => "password" %>
   </div>
   <div class="field">
     <%= f.label :nombre %><br />
@@ -36,6 +36,6 @@
     <%= f.text_field :email %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :Registrar %>
   </div>
 <% end %>

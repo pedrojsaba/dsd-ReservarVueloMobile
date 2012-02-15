@@ -2,12 +2,17 @@ class PassengersController < ApplicationController
   # GET /passengers
   # GET /passengers.json
   def index
-    @passengers = Passenger.all
-
+    #@passengers = Passenger.all
+    mensaje ="La sesion de " + session[:name] + " ha sido cerrada."
+    session[:user] = nil
+    session[:pwd] = nil
+    session[:name] = nil
     respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @passengers }
+      #format.html # index.html.erb
+      format.html { redirect_to "/", notice: mensaje}
+      #format.json { render json: @passengers }
     end
+
   end
 
   # GET /passengers/1
@@ -78,6 +83,9 @@ class PassengersController < ApplicationController
       @passenger = response.to_hash
       respond_to do |format|
         if @passenger[:registrar_pasajero_response][:return][:codigo]=="0"
+          session[:user]=@passenger[:registrar_pasajero_response][:return][:pasajero][:usuario]
+          session[:name]=@passenger[:registrar_pasajero_response][:return][:pasajero][:nombre]
+          session[:pwd]=@passenger[:registrar_pasajero_response][:return][:pasajero][:password]
           format.html { redirect_to "/passengers/"+@passenger[:registrar_pasajero_response][:return][:pasajero][:idpasajero], notice: @passenger[:registrar_pasajero_response][:return][:mensaje] }
           format.json { render json: @passenger[:registrar_pasajero_response][:return][:mensaje], status: :created, location: @passenger}
         else

@@ -30,10 +30,17 @@
 		
 			<h1>Reserva de Vuelos</h1>
 			<a href="/" data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-left jqm-home">Home</a>
-			<a href="/passengers/new" class="ui-btn-right" >
-			<span>Sign In</span>
-			</a>
-
+			<div  class="ui-btn-right">
+				<% if session[:name] == nil %>  
+					<a href="/users/new">
+					Iniciar Sesión</a>
+					<span> ó </span>
+					<a href="/passengers/new">
+					Registrate</a>				
+				<% else %>
+					<span>Bienvenido(a) <a href="/passengers" alt="Cerrar Sesión"><%= session[:name] %></a> </span>
+				<% end %>
+			</div>
 		</div><!-- /header -->
 
 		
