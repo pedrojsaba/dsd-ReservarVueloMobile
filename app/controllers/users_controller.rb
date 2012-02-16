@@ -57,7 +57,7 @@ class UsersController < ApplicationController
         if @response[:validar_usuario_response][:return][:codigo]=="0"
           session[:user] = usuario
           session[:pwd] = password
-          session[:name] = "usuario" 
+          session[:name] = @response[:validar_usuario_response][:return][:username] 
           format.html { redirect_to "/", notice: @response[:validar_usuario_response][:return][:mensaje] }
           format.json { head :ok }
         else
