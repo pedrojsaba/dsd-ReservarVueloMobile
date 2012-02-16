@@ -38,14 +38,11 @@
 					<a href="/passengers/new">
 					Registrate</a>				
 				<% else %>
-					<span>Bienvenido(a) <a href="/passengers" alt="Cerrar Sesión"><%= session[:name] %></a> </span>
+					<span>Usuario: <a href="/passengers" alt="Cerrar Sesión"><%= session[:user] %></a> </span>
 				<% end %>
 			</div>
 		</div><!-- /header -->
 
-		<div id="jqm-homeheader">
-			<p>Reservar Vuelo - QWERTY</p>
-		</div>
 		<div data-role="content"  class="ui-body ui-body-b">
 			<%= yield %>
 		</div>
