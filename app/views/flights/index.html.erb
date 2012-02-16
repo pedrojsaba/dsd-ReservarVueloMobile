@@ -4,7 +4,12 @@
             <p>Reservar Vuelo - QWERTY</p>
         </div>
 
-    <p class="intro">Bienvenido(a) <strong><%= session[:name] %>, </strong> busca y realiza la reserva de tu vuelo.</p>
+    <% if session[:name] == nil %>  
+        <p class="intro"><a href="/users/new">Inicia sesión</a> para buscar y realizar la reserva de tu vuelo.</p>
+    
+    <% else %>
+        <p class="intro">Bienvenido(a) <strong><%= session[:name] %>, </strong> busca y realiza la reserva de tu vuelo.</p>
+    <% end %>
 
     <ul data-role="listview" data-inset="true" data-filter="true">
        
