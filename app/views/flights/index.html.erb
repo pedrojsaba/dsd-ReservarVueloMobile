@@ -5,7 +5,7 @@
         </div>
 
     <% if session[:name] == nil %>  
-        <p class="intro"><a href="/users/new">Inicia sesión</a> para buscar y realizar la reserva de tu vuelo.</p>
+        <p class="intro"><a href="/users/new">Inicia sesión</a> para realizar la reserva de tu vuelo.</p>
     
     <% else %>
         <p class="intro">Bienvenido(a) <strong><%= session[:name] %>, </strong> busca y realiza la reserva de tu vuelo.</p>
