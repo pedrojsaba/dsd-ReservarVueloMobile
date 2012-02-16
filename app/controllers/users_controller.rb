@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+    User.destroy_all
     @users = User.all
 
     respond_to do |format|
@@ -13,6 +14,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    User.destroy_all
     @user = User.find(params[:id])
 
     respond_to do |format|
@@ -24,6 +26,7 @@ class UsersController < ApplicationController
   # GET /users/new
   # GET /users/new.json
   def new
+    User.destroy_all
     @user = User.new
 
     respond_to do |format|
@@ -34,16 +37,19 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    User.destroy_all
     @user = User.find(params[:id])
   end
 
   # POST /users
   # POST /users.json
   def create
+    User.destroy_all
     @user = params[:user]
 ###################
     usuario=@user[:username]
     password=@user[:password]
+
     client = Savon::Client.new (ruta_wdsl)
     client.wsdl.soap_actions
     response = client.request :ser, :validarUsuario do
@@ -55,13 +61,15 @@ class UsersController < ApplicationController
       @response=response.to_hash()
       respond_to do |format|
         if @response[:validar_usuario_response][:return][:codigo]=="0"
-          session[:user] = usuario
+          session[:usr] = usuario
           session[:pwd] = password
           session[:name] = @response[:validar_usuario_response][:return][:username] 
+          Rails.logger.info session[:usr].inspect
+          Rails.logger.info session[:pwd].inspect
           format.html { redirect_to "/", notice: @response[:validar_usuario_response][:return][:mensaje] }
           format.json { head :ok }
         else
-          session[:user] = nil
+          session[:usr] = nil
           session[:pwd] = nil
           session[:name] = nil 
           #format.html { render action: "new" }

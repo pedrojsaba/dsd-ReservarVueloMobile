@@ -4,9 +4,11 @@ class PassengersController < ApplicationController
   def index
     #@passengers = Passenger.all
     mensaje ="La sesion de " + session[:name] + " ha sido cerrada."
-    session[:user] = nil
+    session[:usr] = nil
     session[:pwd] = nil
     session[:name] = nil
+    Passenger.destroy_all
+    User.destroy_all
     respond_to do |format|
       #format.html # index.html.erb
       format.html { redirect_to "/", notice: mensaje}
@@ -38,6 +40,7 @@ class PassengersController < ApplicationController
   # GET /passengers/new
   # GET /passengers/new.json
   def new
+    Passenger.destroy_all
     @passenger = Passenger.new
 
     respond_to do |format|
@@ -64,7 +67,7 @@ class PassengersController < ApplicationController
   # POST /passengers
   # POST /passengers.json
   def create
-
+    Passenger.destroy_all
     @passenger = Passenger.new(params[:passenger])
     lastname=@passenger.last_name
     firstname=@passenger.first_name
@@ -83,9 +86,9 @@ class PassengersController < ApplicationController
       @passenger = response.to_hash
       respond_to do |format|
         if @passenger[:registrar_pasajero_response][:return][:codigo]=="0"
-          session[:user]=@passenger[:registrar_pasajero_response][:return][:pasajero][:usuario]
-          session[:name]=@passenger[:registrar_pasajero_response][:return][:pasajero][:nombre]
-          session[:pwd]=@passenger[:registrar_pasajero_response][:return][:pasajero][:password]
+          session[:usr] = @passenger[:registrar_pasajero_response][:return][:pasajero][:usuario]
+          session[:name] = @passenger[:registrar_pasajero_response][:return][:pasajero][:nombre]
+          session[:pwd] = @passenger[:registrar_pasajero_response][:return][:pasajero][:password]
           format.html { redirect_to "/passengers/"+@passenger[:registrar_pasajero_response][:return][:pasajero][:idpasajero], notice: @passenger[:registrar_pasajero_response][:return][:mensaje] }
           format.json { render json: @passenger[:registrar_pasajero_response][:return][:mensaje], status: :created, location: @passenger}
         else

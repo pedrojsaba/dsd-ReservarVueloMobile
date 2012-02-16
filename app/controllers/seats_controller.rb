@@ -79,9 +79,11 @@ class SeatsController < ApplicationController
   def update
     @seat = Seat.find(params[:id])
 
-    idasiento=@seat.id_asiento.to_s
-    usuario=session[:user].to_s
-    password=session[:pwd].to_s
+    idasiento = @seat.id_asiento.to_s
+    usuario = session[:usr].to_s
+    password = session[:pwd].to_s
+    Rails.logger.info usuario.inspect
+          
     client = Savon::Client.new (ruta_wdsl)
     client.wsdl.soap_actions
     response = client.request :ser, :reservarAsiento do
